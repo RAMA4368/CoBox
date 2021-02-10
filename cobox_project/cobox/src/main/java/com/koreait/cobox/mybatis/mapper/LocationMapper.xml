@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Location">
+
+	<resultMap id="joinTheater" type="Location">
+		<id column="location_id" property="location_id"/>
+		<result column="loc_name" property="loc_name"/>
+		<collection column="location_id" property="theater" javaType="java.util.List" ofType="Theater" select="Theater.selectAllById"></collection>
+	</resultMap>
+	
+	<!--영화예매 페이지-->
+	<select id="selectAll" resultMap="joinTheater">
+		select * from location order by location_id asc
+	</select>
+</mapper>

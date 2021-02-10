@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.koreait.cobox.model.domain.TopCategory"	alias="TopCategory"/>
+		<typeAlias type="com.koreait.cobox.model.domain.Snack"			alias="Snack"/>
+		<typeAlias type="com.koreait.cobox.model.domain.Cart"				alias="Cart"/>
+		<typeAlias type="com.koreait.cobox.model.domain.Genre" 			alias="Genre" />
+		<typeAlias type="com.koreait.cobox.model.domain.Rating" 			alias="Rating" />
+		<typeAlias type="com.koreait.cobox.model.domain.Movie" 			alias="Movie" />
+		<typeAlias type="com.koreait.cobox.model.domain.Comments" 	alias="Comments"/>
+		<typeAlias type="com.koreait.cobox.model.domain.Member"		alias="Member" />
+		<typeAlias type="com.koreait.cobox.model.domain.Paymethod"	alias="Paymethod" />
+		<typeAlias type="com.koreait.cobox.model.domain.Location" 		alias="Location"/>
+		<typeAlias type="com.koreait.cobox.model.domain.Theater" 		alias="Theater"/>
+		<typeAlias type="com.koreait.cobox.model.domain.Reservation"	alias="Reservation"/>
+		<typeAlias type="com.koreait.cobox.model.domain.ResSummary"	alias="ResSummary"/>
+		<typeAlias type="com.koreait.cobox.model.domain.Schedule"		alias="Schedule"/>
+		<typeAlias type="com.koreait.cobox.model.domain.Notice" 			alias="Notice"/>		
+		<typeAlias type="com.koreait.cobox.model.domain.Division"		alias="Division"/>
+		<typeAlias type="com.koreait.cobox.model.domain.Mcart"		alias="Mcart"/>
+		
+	</typeAliases>
+
+  <mappers>
+    <mapper resource="com/koreait/cobox/mybatis/mapper/TopCategoryMapper.xml"/>
+    <mapper resource="com/koreait/cobox/mybatis/mapper/SnackMapper.xml"/>
+    <mapper resource="com/koreait/cobox/mybatis/mapper/CartMapper.xml"/>
+    <mapper resource="com/koreait/cobox/mybatis/mapper/GenreMapper.xml"/>
+	<mapper resource="com/koreait/cobox/mybatis/mapper/RatingMapper.xml"/>
+	<mapper resource="com/koreait/cobox/mybatis/mapper/MovieMapper.xml"/>
+	<mapper resource="com/koreait/cobox/mybatis/mapper/CommentsMapper.xml"/>
+	<mapper resource="com/koreait/cobox/mybatis/mapper/MemberMapper.xml"/>
+	<mapper resource="com/koreait/cobox/mybatis/mapper/PaymethodMapper.xml"/>
+	<mapper resource="com/koreait/cobox/mybatis/mapper/TheaterMapper.xml"/>
+	<mapper resource="com/koreait/cobox/mybatis/mapper/ReservationMapper.xml"/>
+	<mapper resource="com/koreait/cobox/mybatis/mapper/ResSummaryMapper.xml"/>
+	<mapper resource="com/koreait/cobox/mybatis/mapper/ScheduleMapper.xml"/>
+	<mapper resource="com/koreait/cobox/mybatis/mapper/NoticeMapper.xml"/>
+	<mapper resource="com/koreait/cobox/mybatis/mapper/DivisionMapper.xml"/>
+	<mapper resource="com/koreait/cobox/mybatis/mapper/LocationMapper.xml"/>
+	<mapper resource="com/koreait/cobox/mybatis/mapper/McartMapper.xml"/>
+  </mappers>
+</configuration>

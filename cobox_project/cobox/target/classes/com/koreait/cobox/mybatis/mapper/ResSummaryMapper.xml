@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ResSummary">
+
+	<!-- 결제요청 처리  -->
+	<insert id="insert" parameterType="ResSummary">
+		insert into res_summay(res_summay_id,member_id,paymethod_id,total_price,total_pay)
+		values(seq_res_summary.nextval, #{member_id},#{paymethod_id},#{total_price},#{total_pay})
+		<selectKey order="AFTER" keyProperty="res_summay_id" resultType="int">
+			select seq_res_summary.currval as res_summary_id from dual
+		</selectKey>
+	</insert>
+	
+	<!-- 한건의 결제 정보  -->
+	<select id="selectById" resultType="ResSummary" parameterType="int">
+		select * from res_summary where res_summary_id=#{res_summary_id}
+	</select>
+	
+	<!-- 결제 수정  -->
+	<update id="update" parameterType="ResSummary">
+		update payment set res_summary_id=#{res_summary_id}, paydate=#{paydate}, total_price=#{total_price},total_pay=#{total_pay} where res_summary_id=#{res_summary_id} 
+	</update>
+	
+	<!-- 결제 환불(삭제?)  -->
+	<delete id="delete" parameterType="int">
+		delete res_summary from res_summary_id=#{res_summary_id}
+	</delete>
+	
+</mapper>

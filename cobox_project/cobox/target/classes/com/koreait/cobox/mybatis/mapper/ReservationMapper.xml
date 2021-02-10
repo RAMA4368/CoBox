@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Reservation">
+	<!--예약정보-->
+	<insert id="insert" parameterType="Reservation">
+		insert into reservation(reservation_id,res_summary_id,schedule_id,seat_id,seatquantity) 
+		values(seq_reservation.nextval,#{res_summary_id},#{schedule_id},#{seat_id},#{seatquantity})
+	</insert>
+	
+	<select id="selectById" parameterType="Reservation" resultType="int">
+		select * from reservation where reservation_id=#{reservation_id}
+	</select>
+	
+	<!--한건의예매정보보기-->
+	<!-- 
+	<resultMap  id="joinSchedulePaymentSeat" type="Reservation">
+		<id column="reservation_id" property="reservation_id"/>
+		<result column="seatquantity" property="seatquantity"/>
+		<association column="schedule_id" property="schedule" javaType="Schedule" select="Schedule.selectById"/>
+		<association column="payment_id" property="payment" javaType="Payment" select="Payment.selectById"/>
+		<collection column="seat_id" property="seat" javaType="java.util.List" ofType="Seat" select="Seat.selectById"/>
+	</resultMap>
+	<select id="selectById" parameterType="Reservation" resultMap="joinSchedulePaymentSeat">
+		select * from reservation where reservation_id=#{reservation_id}
+	</select>
+	 -->
+	
+	<update id="update" parameterType="Reservation">
+		update reservation set schedule_id=#{Schedule.schedule_id}, payment_id=#{Payment.payment_id}, seat_id=#{Seat.seat_id}, seatquantity=#{seatquantity}
+		where reservation_id=#{reservation_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from reservation where reservation_id=#{reservation_id}
+	</delete>
+	
+</mapper>

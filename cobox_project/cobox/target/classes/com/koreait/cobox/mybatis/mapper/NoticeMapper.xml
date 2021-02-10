@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Notice">
+	
+	<resultMap id="noticeDivisionMap" type="Notice">
+		<id column="notice_id" property="notice_id"/>
+		<result column="title" property="title"/>
+		<result column="writer" property="writer"/>
+		<result column="contents" property="contents"/>
+		<result column="regdate" property="regdate"/>
+		<result column="hit" property="hit"/>
+		<association
+			column="division_id"
+			property="division"
+			javaType="Division"
+			select="Division.select"/>
+	</resultMap>
+	<select id="selectAll" resultMap="noticeDivisionMap">
+		select * from notice order by notice_id desc
+	</select>
+	
+	<select id="selectAllById" parameterType="int" resultType="Notice">
+		select * from notice where division_id=#{division_id}
+	</select>
+	
+	<select id="select" parameterType="int" resultType="Notice">
+		select * from notice where notice_id=#{notice_id}
+	</select>
+	
+	<insert id="insert" parameterType="Notice">
+		insert into notice(notice_id, division_id, title, writer, contents) values(seq_notice.nextval, #{division.division_id}, #{title}, #{writer}, #{contents})
+		<selectKey order="AFTER" keyProperty="notice_id" resultType="int">
+			select seq_notice.currval as notice_id from dual
+		</selectKey>
+	</insert>
+	
+	<update id="update" parameterType="Notice">
+		update notice set title=#{title},writer=#{writer},contents=#{contents} where notice_id=#{notice_id}
+	</update>
+	
+	<update id="noticeHit" parameterType="int">
+		update notice set hit = hit+1 where notice_id=#{notice_id}
+	</update>
+	
+	<!-- admin을 객체로 받아서 비번이 일치하면 삭제가능하게..?  -->
+	<delete id="delete" parameterType="int">
+		delete from notice where notice_id=#{notice_id}
+	</delete>
+	
+	
+</mapper>

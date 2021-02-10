@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Division">
+	<select id="selectAll" resultType="Division">
+		select * from division order by division_id asc
+	</select>
+	
+	 <select id="select" parameterType="int" resultType="Division">
+	 	select * from division where division_id = #{division_id}
+	 </select>
+	 
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Snack">
+
+	<resultMap id="snackTopcategoryMap" type="Snack">
+		<id column="snack_id" 			property="snack_id"/>
+		<result column="snack_name"	property="snack_name"/>
+		<result column="price"			property="price"/>
+		<result column="amount"		property="amount"/>
+		<result column="detail"			property="detail"/>
+		<result column="filename"		property="filename"/>
+		
+		<association column="topcategory_id" property="topCategory" javaType="TopCategory" select="TopCategory.select"/>
+	</resultMap>
+
+	<select id="selectAll" resultMap="snackTopcategoryMap">
+		select * from snack order by snack_id desc
+	</select>
+
+	<insert id="insert" parameterType="Snack">
+		insert into snack(snack_id, topcategory_id, snack_name, price, amount, detail, filename) 
+		values(seq_snack.nextval, #{topCategory.topcategory_id}, #{snack_name}, #{price}, #{amount}, #{detail}, #{filename})
+		<selectKey order="AFTER" keyProperty="snack_id" resultType="int">
+			select seq_snack.currval as snack_id from dual
+		</selectKey>
+	</insert>
+	
+	<select id="selectByTopCategoryId" parameterType="int" resultType="Snack">
+		select * from snack where topcategory_id=#{topcategory_id}
+	</select>
+	
+	<select id="select" parameterType="int" resultMap="snackTopcategoryMap">
+		select * from snack where snack_id=#{snack_id}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from snack where snack_id=#{snack_id}
+	</delete>
+	
+	<update id="update" parameterType="Snack">
+		update snack set topcategory_id=#{topCategory.topcategory_id}, snack_name=#{snack_name}, price=#{price}, 
+		amount=#{amount}, detail=#{detail}, filename=#{filename} where snack_id=#{snack_id}
+	</update>
+	
+</mapper>

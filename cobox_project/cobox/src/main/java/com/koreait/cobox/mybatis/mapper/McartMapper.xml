@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mcart">
+
+<insert id="insert" parameterType="Mcart">
+insert into mcart(mcart_id, movie_id, member_id)
+	values(seq_mcart.nextval, #{movie_id}, #{member_id})
+</insert>
+
+<!--영화 장바구니 중복여부 체크 -->
+<select id="duplicateCheck" parameterType="Mcart" resultType="Mcart">
+	select * from mcart where member_id=#{member_id} and movie_id=#{movie_id}
+</select>
+
+<!-- member_id에 맞는 찜 목록 가져오기 -->
+
+<resultMap id="joinRatingGenre" type="Mcart">
+		<id column="mcart_id" property="mcart_id"/>
+		<result column="movie_id" property="movie_id"/>
+		<result column="member_id" property="member_id"/>
+		<result column="movie_name" property="movie_name"/>
+		<result column="directory" property="director"/>
+		<result column="actor" property="actor"/>
+		<result column="release" property="release"/>
+		<result column="story" property="story"/>
+		<result column="poster" property="poster"/>
+		
+		<association column="rating_id"
+					property="rating"
+					javaType="Rating"
+					select="Rating.selectAllById"/>
+					
+		<collection column="movie_id"
+				    property="genreList"
+				    javaType="java.util.List"
+				    ofType="Genre"
+				    select="Genre.selectByMovie_id"/> 
+	
+	</resultMap>
+	
+<select id="selectAll" parameterType="int" resultMap="joinRatingGenre">
+	select mcart_id, c.movie_id as movie_id , member_id
+	,movie_name , rating_id, director, actor, release, story, poster
+	from mcart c, movie m 
+	 where c.movie_id = m.movie_id and member_id=#{member_id}
+</select>
+
+</mapper>

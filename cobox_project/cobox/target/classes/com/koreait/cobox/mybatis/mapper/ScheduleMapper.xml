@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Schedule">
+   <!--영화선택 시간,상영관,날짜 -->
+   <insert id="insert" parameterType="Schedule">
+      insert into schedule(schedule_id,movie_id,theater_id, sdate, stime) values(seq_schedule.nextval,#{movie.movie_id},#{theater.theater_id},#{sdate},#{stime})
+   </insert>
+   
+   <resultMap type="Schedule" id="jointheater">
+      <id column="schedule_id" property="schedule_id"/>
+      <result column="sdate" property="sdate"/>
+      <result column="stime" property="stime"/>
+      <association column="movie_id" property="movie" javaType="Movie" select="Movie.selectById"/>
+      <association column="theater_id" property="theater" javaType="Theater" select="Theater.selectByTheaterId"/> 
+   </resultMap>
+   <!--한건의 영화선택정보가져오기-->
+   <select id="selectById" parameterType="int" resultMap="jointheater">
+      select * from schedule where schedule_id=#{schedule_id}
+   </select>
+   
+   <!--선택정보업데이트-->
+   <update id="update" parameterType="Schedule">
+      update schedule set movie_id=#{movie_id},sdate=#{sdate},stime=#{stime},theater_id=#{theater_id} where schedule_id=#{schedule_id}
+   </update>
+   
+   <!--선택정보삭제-->
+   <delete id="delete" parameterType="int">
+      delete from schedule where schedule_id=#{schedule_id}
+   </delete>
+   
+</mapper>
